@@ -1,0 +1,13 @@
+# Standard Ignored Files
+
+# WINDOWS
+system.ini
+# macOS
+.DS_Store
+# LINUX DERIATIVES
+.desktop
+
+# Specific Ignored Files
+
+/export
+/.vscode

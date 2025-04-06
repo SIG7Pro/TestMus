@@ -1,0 +1,24 @@
+Conductor Idea:
+
+Vars:
+- BPM
+- the rest of the old vars too
+public var bpm:Float = 100; // BPM of song.
+    public var crotchet:Float = 0; // Duration of a beat calculated from BPM.
+    public var offset:Float = 0;
+    public var songPosition:Float; // Where you are in the song.
+    public var beatNumber:Float;
+    public var lastBeat:Float;
+// https://www.gamedeveloper.com/audio/coding-to-the-beat---under-the-hood-of-a-rhythm-game-in-unity
+    public var curSongTime:Float;
+// Solo Vars
+    public var amountBumped:Float = 0; // Variable dedicated to how many bumps occured.
+
+functions:
+
+    when initialized, it gets the bpm, as well as whatever offset it might have (if i find a way to make logic for it)
+    perhaps in playstate, audio is loaded from there, and then the position is tracked to the conductor
+    song.pos = conductor.songPosition
+
+
+    think bout this mroe in morning
