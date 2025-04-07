@@ -21,12 +21,16 @@ class Conductor{
     public var songActive:Bool = true;
     public var isBump:Bool = false; /* Determines if the song is on a beat. */
 
-        public function new(bpm:Float, songActive:Bool) {
+        public function activate(bpm:Float, songActive:Bool) {
 
             crotchet = 60 / bpm; // Beats per sec.
             if (songActive){ // Requires a loaded FlxSound.
                 update();
             }
+        }
+
+        public function new(){
+
         }
 
         public function update()

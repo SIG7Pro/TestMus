@@ -1,7 +1,4 @@
 package play;
-import flixel.sound.FlxSound;
-import play.Conductor;
-
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
@@ -9,13 +6,15 @@ import flixel.system.FlxAssets;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
 
+import flixel.sound.FlxSound;
+import play.Conductor;
 // Shoutouts to formatter.org. Formatted with Chromium Style with an Indent of 5. Though I did move some variables and functions back one.
 	class PlayState extends FlxState {
 	var colorLocation : String = "assets/images/colors/";
 
 	var test:FlxSprite;
 	var mainFocus:FlxSprite;
-	var condoCt:Conductor;
+	var songConductor:Conductor;
 	var sprite:FlxSprite;
 	var myText:FlxText;
 
@@ -56,23 +55,28 @@ import flixel.util.FlxColor;
           // BPM: 135
 
           if (FlxG.sound.music == null) {
-               startSong("assets/music/Inst-erect.ogg");
+               startSong("HE.ogg", 125); // Assumes its in "/assets/music" already.
           }
 	}
 
 	override function update(elapsed : Float) : Void {
           // myText.text =
+          if (songConductor.isBump == false){
+				mainFocus.alpha = 0.5;
+          }else if (songConductor.isBump == true){
+				mainFocus.alpha = 1;
+          }
 	}
 
 	var songName:String;
-	function startSong(songName:String) {
+	var bpm:Float;
+	function startSong(songName:String, bpm:Float) {
           // FlxG.sound.load stores a sound.
           // 		  .play("..."); plays a sound.
-          //		 	  .playMusic("..."); Apparently plays music that
-          //loops. Relates to FlxG.sound.music. sound = new FlxSound;
-          // FlxG.sound.playMusic("assets/music/Inst-erect.ogg");
+          //		 	  .playMusic("..."); Apparently plays music that loops. Relates to FlxG.sound.music. sound = new FlxSound;
           if (currentSong == null)
-               currentSong = FlxG.sound.load(songName);
+               currentSong = FlxG.sound.load("assets/music/" + songName);
           currentSong.play();
+          songConductor.activate(bpm, true);
 	}
 }
