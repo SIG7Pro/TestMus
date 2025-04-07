@@ -8,6 +8,7 @@ import flixel.util.FlxColor;
 
 import flixel.sound.FlxSound;
 import play.Conductor;
+import Math;
 class PlayState extends FlxState {
 		var colorLocation : String = "assets/images/colors/";
 
@@ -19,6 +20,7 @@ class PlayState extends FlxState {
 
 		// Ref: https://youtu.be/qR1OntJJVKk?t=349
 		var currentSong:FlxSound;
+		var neededSound:FlxSound;
 
 		var songTime:Float;
 
@@ -55,35 +57,49 @@ class PlayState extends FlxState {
 
 			trace("Sprites Made");
 
-			// BPM: 125
-
+			// High (Erect) BPM: 125
+			// Tutorial & Bopeebo: 100
+			// Monster: 95
+			// Thorns: 190
+			// https://www.reddit.com/r/FridayNightFunkin/comments/m6xcrg/fnf_bpm_i_will_update_when_week_7_comes_out/
+			// https://www.reddit.com/r/FridayNightFunkin/comments/1hhkd41/uhhhhhhhhhhhhhhh/ perfect for rickroll
+			neededSound = FlxG.sound.load("assets/sounds/metronome1.ogg");
 			if (FlxG.sound.music == null) {
-					startSong("HE.ogg", 125); // Assumes its in "/assets/music" already.
+					startSong("Bopeebo_Inst.ogg", 100); // Assumes its in "/assets/music" already.
 					trace("Song Loaded.");
 			}
 		}
 
+		var sBP:Float; // songBeatsPosition
+		//vz
+		var moreThanLessBumps:Float;
 		override function update(elapsed:Float):Void {
 		// 0/10000
 		// BPM: 100 | Chrotchet: 0.1
 		// Last Beat / Current Beat
-			infoText.text = currentSong.time + " / " + currentSong.length +
-			"\n(Position in Beats: " + songConductor.songBeatsPosition + " | Current Beat: " + songConductor.beatNumber + ")" +
-			"\nBPM: " + songBeats + " (In) " + songConductor.bpm + " | Chrotchet: " + songConductor.crotchet +
-			"\nLast Beat: " + songConductor.lastBeat + "\nAmount Bumped: " + songConductor.amountBumped;
+		sBP = Math.ffloor(songConductor.songBeatsPosition);
 
-			if (FlxG.sound.music != null) {
-			trace("Music not null.");
-				if (songConductor.isBump == false){
+			infoText.text = Math.ffloor(currentSong.time / 1000) + " / " + Math.ffloor(currentSong.length / 1000) +
+			"\n(Position in Beats: " + sBP + " | Current Beat: " + sBP + ")" +
+			"\nBPM: " + songBeats + " (In) " + songConductor.bpm + " | Chrotchet: " + songConductor.crotchet +
+			"\nLast Beat: " + Math.ffloor(songConductor.lastBeat) + " + 4 = " + Math.ffloor(songConductor.lastBeat + 4) +
+			"\nAmount Bumped: " + songConductor.amountBumped;
+
+		//	//if (FlxG.sound.music != null) {
+		//	trace("Music not null.");
+				if (songConductor.isBump == true){
 						mainFocus.alpha = 0.5;
-						mainFocus.scale.set(1.5, 1.5);
+						mainFocus.scale.set(1.125, 1.125);
 						trace("Ah!");
-				}else if (songConductor.isBump == true){
+
+				}else if (songConductor.isBump == false){
 						mainFocus.alpha = 1;
 						mainFocus.scale.set(1.0, 1.0);
 				}
-			}
+			//}
 
+			if (songConductor.isBump == true)
+				neededSound.play(true);
 
 			//songConductor.songPosition = currentSong.time;
 			// songTime = currentSong.time;
