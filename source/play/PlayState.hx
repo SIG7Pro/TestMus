@@ -21,10 +21,8 @@ import play.Conductor;
 	// Ref: https://youtu.be/qR1OntJJVKk?t=349
 	var currentSong:FlxSound;
 
-     // var darkShad:ByteArray = new Darken(openfl.display.BitmapData);
-     /**
-      * Function that is called up when to state is created to set it up.
-      */
+	var songTime:Float;
+
 	override public function create():Void {
           mainFocus = new FlxSprite("assets/images/finder.png");
           // mainFocus.loadGraphic("assets/images/finder.png");
@@ -55,7 +53,15 @@ import play.Conductor;
           // BPM: 135
 
           if (FlxG.sound.music == null) {
-               startSong("HE.ogg", 125); // Assumes its in "/assets/music" already.
+               //startSong("HE.ogg", 125); // Assumes its in "/assets/music" already.
+
+
+		  if (currentSong == null)
+               currentSong = FlxG.sound.load("assets/music/" + songName);
+          currentSong.play();
+          songConductor.activate(bpm, true, songTime);
+//???????????
+
           }
 	}
 
@@ -66,6 +72,12 @@ import play.Conductor;
           }else if (songConductor.isBump == true){
 				mainFocus.alpha = 1;
           }
+
+
+          //songConductor.songPosition = currentSong.time;
+          songTime = currentSong.time;
+          songConductor.update(songTime);
+
 	}
 
 	var songName:String;
@@ -77,6 +89,6 @@ import play.Conductor;
           if (currentSong == null)
                currentSong = FlxG.sound.load("assets/music/" + songName);
           currentSong.play();
-          songConductor.activate(bpm, true);
+          songConductor.activate(bpm, true, songTime);
 	}
 }
