@@ -44,39 +44,31 @@ import play.Conductor;
           myText.font = "assets/fonts/Fairfax.ttf";
           add(myText);
 
-          // Song 1: High Erect (Instrumental) - Friday Night Funkin' OST
-          // Arrangement: Kohta T., Kawai Sprite
+          trace("Sprites Made");
+
           // BPM: 125
 
-          // Song 2: Freshurms (Can't be loaded on SYS because MP3.)
-          // Song Length: 35:55 seconds.
-          // BPM: 135
-
           if (FlxG.sound.music == null) {
-               //startSong("HE.ogg", 125); // Assumes its in "/assets/music" already.
-
-
-		  if (currentSong == null)
-               currentSong = FlxG.sound.load("assets/music/" + songName);
-          currentSong.play();
-          songConductor.activate(bpm, true, songTime);
-//???????????
-
-          }
+                startSong("HE.ogg", 125); // Assumes its in "/assets/music" already.
+					trace("Song Loaded?");
+				//songConductor.activate(bpm, true);
+					trace("Conductor.");
+         }
 	}
 
 	override function update(elapsed : Float) : Void {
           // myText.text =
-          if (songConductor.isBump == false){
+         /* if (songConductor.isBump == false){
 				mainFocus.alpha = 0.5;
           }else if (songConductor.isBump == true){
 				mainFocus.alpha = 1;
-          }
+          }*/
 
 
-          //songConductor.songPosition = currentSong.time;
-          songTime = currentSong.time;
-          songConductor.update(songTime);
+		 //songConductor.songPosition = currentSong.time;
+         // songTime = currentSong.time;
+         // songConductor.update(songTime);
+         //songConductor.updateInfo(currentSong.time);
 
 	}
 
@@ -89,6 +81,6 @@ import play.Conductor;
           if (currentSong == null)
                currentSong = FlxG.sound.load("assets/music/" + songName);
           currentSong.play();
-          songConductor.activate(bpm, true, songTime);
+
 	}
 }
