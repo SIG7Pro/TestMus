@@ -15,7 +15,18 @@
 	<!-- ____________________________ Window Settings ___________________________ -->
 	
 	<!--These window settings apply to all targets-->
-	<window width="800" height="500" fps="120" background="#010000" hardware="true" vsync="false" />
+
+	<haxedef name="BIG_720P" if="large"/> <!-- lime test hl -debug -DBIG_720P. For some reason doing -Dlarge didn't do it. -->
+	<!--<haxedef name="FULL_RES" unless="BIG_720P"/>--> <!-- Default -->
+
+	<section if="BIG_720P" unless="FULL_RES">
+	<window width="1280" height="720" fps="120" background="#010100" hardware="true" vsync="false"/>
+	</section>
+
+	<section if="FULL_RES" unless="BIG_720P">
+		<window width="800" height="500" fps="120" background="#010000" hardware="true" vsync="false" />
+	</section>
+
 	
 	<!--Desktop-specific-->
 	<window if="desktop"	orientation="landscape" fullscreen="false" resizable="true" />
