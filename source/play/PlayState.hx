@@ -22,6 +22,8 @@ import play.Conductor;
 import play.ArrowStaff;
 import flixel.sound.FlxSound;
 
+import flixel.math.FlxRandom;
+
 // Reference code: https://github.com/yophlox/Moon4K/blob/main/source/states/PlayState.hx
 // (Hard to understand.)
 
@@ -122,14 +124,14 @@ class PlayState extends FlxState {
 		}
 	}	
 
-
+	public var ran58:Int;
 	override function update(elapsed:Float){
 		songUtils();
 
-		if (Math.ffloor(currentSong.time) == 5 ||  Math.ffloor(songConductor.lastBeat) == 5){
-			trace("test");
-			makePlayNote(5,2);
-		}
+		//if (Math.ffloor(currentSong.time) == 5 ||  Math.ffloor(songConductor.lastBeat) == 5){
+		//	trace("test");
+		//	makePlayNote(5,2);
+		//}
 
 		infoText.text = Math.ffloor(currentSong.time / 1000) + " / " + Math.ffloor(currentSong.length / 1000) +
 			"\n(Position in Beats: " + sBP + " | Current Beat: " + sBP + ")" +
@@ -140,7 +142,8 @@ class PlayState extends FlxState {
 		if (FlxG.keys.justPressed.W)
 			{
 				//
-				makePlayNote(5,2);
+				ran58 = Math.floor(FlxG.random.int(5, 8));
+				makePlayNote(ran58, 2);
 				//trace("Launch!");
 			}
 
@@ -159,9 +162,14 @@ class PlayState extends FlxState {
 						infoText.scale.set(1.0, 1.0);
 		}
 
-		if (notesMade > 0)
-			playArrows.members[notesMade].y = Math.ffloor(FlxG.height -(songConductor.songBeatsPosition));
-			trace( Math.ffloor(FlxG.height - ( (songConductor.songBeatsPosition) * (scrollSpeed * 10)) ));
+		if (notesMade > 0){
+			//playArrows.members[notesMade].y = Math.ffloor(FlxG.height -(songConductor.songBeatsPosition));
+			//trace( Math.ffloor(FlxG.height - ( (songConductor.songBeatsPosition) * (scrollSpeed * 10)) ));
+			for (arrow in playArrows.members){
+				//arrow.y -= (songConductor.songBeatsPosition);
+				arrow.y -= 150;
+			}
+		}
 
 	}
 
@@ -176,19 +184,18 @@ class PlayState extends FlxState {
 					var makePlayNotesID:Int = value;
 					var makePlayNotesInsX:Float = 0;
 
-					switch makePlayNotesID { // Sets the X probably.
+					switch makePlayNotesID {
 						case 1: makePlayNotesInsX = (33 + (120 * 1) + (FlxG.width / 1.875) * 0); // Lazy but maybe worth it.
 						case 2: makePlayNotesInsX = (33 + (120 * 2) + (FlxG.width / 1.875) * 0);
 						case 3: makePlayNotesInsX = (33 + (120 * 3) + (FlxG.width / 1.875) * 0);
 						case 4: makePlayNotesInsX = (33 + (120 * 4) + (FlxG.width / 1.875) * 0);
 
-						case 5: makePlayNotesInsX = (33 + (120 * 1) + (FlxG.width / 1.875) * 1);
-						case 6: makePlayNotesInsX = (33 + (120 * 2) + (FlxG.width / 1.875) * 1);
-						case 7: makePlayNotesInsX = (33 + (120 * 3) + (FlxG.width / 1.875) * 1);
-						case 8: makePlayNotesInsX = (33 + (120 * 4) + (FlxG.width / 1.875) * 1);
+						case 5: makePlayNotesInsX = (33 + (120 * 0) + (FlxG.width / 1.875) * 1);
+						case 6: makePlayNotesInsX = (33 + (120 * 1) + (FlxG.width / 1.875) * 1);
+						case 7: makePlayNotesInsX = (33 + (120 * 2) + (FlxG.width / 1.875) * 1);
+						case 8: makePlayNotesInsX = (33 + (120 * 3) + (FlxG.width / 1.875) * 1);
 						//default: default-expression;
 					}
-					var makePlayNotesInsY:Float;
 
 					var childPlayArrow:ArrowStaff = new ArrowStaff(makePlayNotesID, makePlayNotesInsX, -10, 154, 157, 0xff87a3ad, scrollSpeed);
 					childPlayArrow.scale.set(0.75, 0.75);
@@ -196,23 +203,14 @@ class PlayState extends FlxState {
 					//childPlayArrow..y += playArrows.members[notesMade].y + sBP;
 					childPlayArrow.color = FlxColor.CYAN;
 
-
-
 					if (isUpscroll){
 						childPlayArrow.y = FlxG.height - ((songConductor.songBeatsPosition) * (10 * scrollSpeed));
 					}else{
 						childPlayArrow.y = (FlxG.height + (childPlayArrow.height) - 200) * -1;
 					}
 
-					var playNoteSpawnY:Float = childPlayArrow.y;
-
 					trace(childPlayArrow.y + ' start height');
 					playArrows.add(childPlayArrow);
-
-					//playArrows
-					//playArrows.members[notesMade].y = FlxG.height -(songConductor.songBeatsPosition);
-					//playArrows.
-
 			//}
 		//}
 	}
