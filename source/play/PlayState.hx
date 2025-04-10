@@ -193,6 +193,8 @@ class PlayState extends FlxState {
 					var childPlayArrow:ArrowStaff = new ArrowStaff(makePlayNotesID, makePlayNotesInsX, -10, 154, 157, 0xff87a3ad, scrollSpeed);
 					childPlayArrow.scale.set(0.75, 0.75);
 					childPlayArrow.updateHitbox();
+					//childPlayArrow..y += playArrows.members[notesMade].y + sBP;
+					childPlayArrow.color = FlxColor.CYAN;
 
 
 
@@ -207,9 +209,9 @@ class PlayState extends FlxState {
 					trace(childPlayArrow.y + ' start height');
 					playArrows.add(childPlayArrow);
 
-					playArrows.members[notesMade].color = FlxColor.CYAN;
+					//playArrows
 					//playArrows.members[notesMade].y = FlxG.height -(songConductor.songBeatsPosition);
-					playArrows.members[notesMade].y = playArrows.members[notesMade].y + sBP;
+					//playArrows.
 
 			//}
 		//}
