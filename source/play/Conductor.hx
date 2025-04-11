@@ -11,7 +11,7 @@ class Conductor{
     // Offset likely won't be accounted as of writing.
     public var songPosition:Float;
     // Current time of the song. (In MS.)
-        public var songBeatsPosition:Float;
+        public var songPositionBeats:Float;
         // Ditto but in beats.
         public var songLength:Float;
         // Determines the length of the song. It should be grabbed with the "length" variable or "endTime" variable (if one is set) of the FlxSound.
@@ -37,7 +37,7 @@ class Conductor{
         public function updateInfo(songPosition:Float, songLength:Float)
         {
             crotchet = ((60 / bpm) * 1000);
-            songBeatsPosition = songPosition / crotchet;
+            songPositionBeats = songPosition / crotchet;
 
                 if (Math.ffloor(songPosition / 1000) >= Math.ffloor(songLength / 1000))
                 {
@@ -45,21 +45,21 @@ class Conductor{
                     return;
                 }
 
-                //trace("if " + (Math.ffloor(songBeatsPosition) == Math.ffloor(lastBeat + 4) ) );
-                // trace("songBeatsPosition: " + songBeatsPosition + "(Floored: " + Math.ffloor(songBeatsPosition) + ") | lastBeat Floored: " + Math.ffloor(lastBeat) + " | Combined: " + Math.ffloor(songBeatsPosition + lastBeat));
+                //trace("if " + (Math.ffloor(songPositionBeats) == Math.ffloor(lastBeat + 4) ) );
+                // trace("songPositionBeats: " + songPositionBeats + "(Floored: " + Math.ffloor(songPositionBeats) + ") | lastBeat Floored: " + Math.ffloor(lastBeat) + " | Combined: " + Math.ffloor(songPositionBeats + lastBeat));
 
-                if (Math.ffloor(songBeatsPosition) == Math.ffloor(lastBeat + 1) ){ // Plays on every beat.
+                if (Math.ffloor(songPositionBeats) == Math.ffloor(lastBeat + 1) ){ // Plays on every beat.
                     isBump = true;
-                    lastBeat = songBeatsPosition;
+                    lastBeat = songPositionBeats;
                     trace("Bump!");
                     amountBumped += 1;
                 }else{
                     isBump = false;
                 }
 
-               /* if (Math.ffloor(songBeatsPosition) == Math.ffloor(lastBeat + 4) ){
+               /* if (Math.ffloor(songPositionBeats) == Math.ffloor(lastBeat + 4) ){
                     bigBump = true;
-                    lastBeat = songBeatsPosition;
+                    lastBeat = songPositionBeats;
                     trace("Big Bump!");
                     //amountBumped += 1;
                 }else{
